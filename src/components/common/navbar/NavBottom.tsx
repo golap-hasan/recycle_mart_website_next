@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Menu, Search, Heart, GitCompare, ShoppingBag, Logs } from "lucide-react";
 import {
   NavigationMenu,
@@ -46,7 +47,6 @@ export default function NavBottom() {
       items: ["Air Conditioners", "Refrigerators", "Washing Machines", "Microwaves"],
     },
   ];
-
   return (
     <div>
       <div className="custom-width mx-auto flex items-center justify-between py-3 px-6">
@@ -129,8 +129,37 @@ export default function NavBottom() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
-              {/* ... mobile nav content ... */}
+            <SheetContent side="left" className="flex w/full max-w-xs flex-col gap-4 p-0">
+              <SheetHeader className="space-y-1 border-b border-border px-6 py-4">
+                <SheetTitle className="text-base font-semibold uppercase tracking-wide">
+                  Categories
+                </SheetTitle>
+              </SheetHeader>
+              <ScrollArea className="h-full px-6 py-4">
+                <nav className="space-y-5 text-sm">
+                  {categories.map((category) => (
+                    <div key={category.title} className="space-y-3">
+                      <Link
+                        href={`/categories/${toSlug(category.title)}`}
+                        className="block font-semibold"
+                      >
+                        {category.title}
+                      </Link>
+                      <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                        {category.items.map((item) => (
+                          <Link
+                            key={item}
+                            href={`/categories/${toSlug(item)}`}
+                            className="rounded-full border border-border px-3 py-1 transition hover:border-primary"
+                          >
+                            {item}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </nav>
+              </ScrollArea>
             </SheetContent>
           </Sheet>
 
@@ -144,19 +173,16 @@ export default function NavBottom() {
             </div>
           </div>
 
-          {/* Search Icon (Mobile) */}
-          <div className="md:hidden">
-            <Button variant="outline" size="icon">
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="icon" className="md:hidden">
               <Search />
             </Button>
+            <Link href="/cart">
+              <Button size="icon">
+                <ShoppingBag />
+              </Button>
+            </Link>
           </div>
-
-          {/* Cart Icon */}
-          <Link href="/cart">
-            <Button size="icon">
-              <ShoppingBag />
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
