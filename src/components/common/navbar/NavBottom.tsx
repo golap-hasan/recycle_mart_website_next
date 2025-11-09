@@ -4,33 +4,91 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, Heart, GitCompare, ShoppingBag } from "lucide-react";
+import { Menu, Search, Heart, GitCompare, ShoppingBag, Logs } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 export default function NavBottom() {
+  const toSlug = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+
+  const categories = [
+    {
+      title: "Smart / Android Merchants",
+      items: ["Smartphones", "Android Tablets", "Wearables"],
+    },
+    {
+      title: "Mobile, Electronics & Gadgets",
+      items: ["Laptops", "Headphones", "Smart Home"],
+    },
+    {
+      title: "Vehicles & Accessories",
+      items: ["Cars", "Motorcycles", "Parts & Accessories"],
+    },
+    {
+      title: "Home & Living",
+      items: ["Furniture", "Kitchen & Dining", "Decor"],
+    },
+    {
+      title: "Property",
+      items: ["Apartments", "Commercial Space", "Land"],
+    },
+    {
+      title: "Others",
+      items: ["Air Conditioners", "Refrigerators", "Washing Machines", "Microwaves"],
+    },
+  ];
+
   return (
     <div>
       <div className="custom-width mx-auto flex items-center justify-between py-3 px-6">
         {/* Categories Dropdown (Desktop) */}
         <div className="hidden lg:block">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button>
-                <Menu />
-                <span>All Categories</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Category 1</DropdownMenuItem>
-              <DropdownMenuItem>Category 2</DropdownMenuItem>
-              <DropdownMenuItem>Category 3</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-primary">
+                  <Logs className="mr-2 w-4 h-4" />
+                  All Categories
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-80 gap-3 p-4">
+                    {categories.map((category) => (
+                      <li key={category.title}>
+                        <div className="select-none space-y-1 rounded-md p-3 leading-none transition-colors hover:bg-accent focus:bg-accent">
+                          <Link
+                            href={`/categories/${toSlug(category.title)}`}
+                            className="text-sm font-medium leading-none"
+                          >
+                            {category.title}
+                          </Link>
+                          <div className="mt-2 flex flex-wrap gap-2 text-xs leading-snug text-muted-foreground">
+                            {category.items.map((item) => (
+                              <Link
+                                key={item}
+                                href={`/categories/${toSlug(item)}`}
+                                className="rounded-sm bg-muted px-2 py-1 transition-colors hover:bg-accent hover:text-accent-foreground"
+                              >
+                                {item}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
         {/* Search Bar (Desktop) */}

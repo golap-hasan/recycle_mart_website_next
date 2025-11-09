@@ -12,11 +12,10 @@ import {
 
 const navLinks = [
   { href: "/", label: "HOME" },
-  { href: "/layout", label: "LAYOUT" },
+  { href: "/shop", label: "SHOP" },
   { href: "/features", label: "FEATURES" },
-  { href: "/daily-deals", label: "DAILY DEALS" },
-  { href: "/blog", label: "BLOG" },
-  { href: "/pages", label: "PAGES" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/contact", label: "CONTACT" },
 ];
 
 const NavMiddle = () => {
