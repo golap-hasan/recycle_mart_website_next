@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Menu, Search, Heart, Logs } from "lucide-react";
+import { MenuIcon, Search, Heart } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -66,8 +66,8 @@ export default function NavBottom() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="flex items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-5 py-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-background">
-                  <Logs className="h-4 w-4" />
+                <NavigationMenuTrigger className="flex items-center gap-2 rounded-full border border-primary bg-primary px-5 py-5 text-sm font-semibold text-background shadow-sm transition hover:bg-primary/90">
+                  <MenuIcon className="h-4 w-4" />
                   <span>All categories</span>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -115,7 +115,7 @@ export default function NavBottom() {
             />
             <Button
               size="icon"
-              className="absolute right-1 top-1 h-9 w-9 rounded-full bg-primary text-primary-foreground shadow hover:bg-primary/90"
+              className="absolute right-1 top-1 h-9 w-9 rounded-full bg-primary text-background shadow hover:bg-primary/90"
             >
               <Search />
             </Button>
@@ -125,7 +125,7 @@ export default function NavBottom() {
         {/* Action Icons (Desktop) */}
         <div className="hidden lg:flex items-center gap-3">
           <Link href="/wishlist">
-            <Button className="flex items-center gap-2 rounded-full bg-primary px-5 py-5 text-sm font-semibold text-primary-foreground shadow-md transition hover:bg-primary/90">
+            <Button className="flex items-center gap-2 rounded-full bg-primary px-5 py-5 text-sm font-semibold text-background shadow-md transition hover:bg-primary/90">
               <Heart />
             </Button>
           </Link>
@@ -141,7 +141,7 @@ export default function NavBottom() {
                 size="icon"
                 className="border-white/30 bg-white/10 text-white hover:bg-white/20"
               >
-                <Menu />
+                <MenuIcon />
               </Button>
             </SheetTrigger>
             <SheetContent
@@ -207,8 +207,8 @@ export default function NavBottom() {
               <Search />
             </Button>
             <Link href="/wishlist">
-              <Button className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-primary shadow-md transition hover:bg-white">
-                <Heart className="h-4 w-4" />
+              <Button size="icon" className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-primary shadow-md transition hover:bg-white">
+                <Heart/>
                 <span className="hidden sm:inline">Saved</span>
               </Button>
             </Link>

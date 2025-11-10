@@ -25,7 +25,13 @@ const NavMiddle = () => {
       <div className="custom-width mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <Link href="/">
-          <Image src="/logo.png" alt="ALL PRICE BD" width={100} height={20} />
+          <Image
+            src="/logo.png"
+            alt="ALL PRICE BD"
+            width={100}
+            height={20}
+            className="h-10 md:h-20 w-auto"
+          />
         </Link>
 
         {/* Desktop Primary Actions */}
