@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Ecommerce | Home",
+  title: "ALL PRICE BD | Home",
   description: "Purchase Products online from Ecommerce.",
 };
 

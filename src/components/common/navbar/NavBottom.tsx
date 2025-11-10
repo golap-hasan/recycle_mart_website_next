@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Menu, Search, Heart, GitCompare, ShoppingBag, Logs } from "lucide-react";
+import { Menu, Search, Heart, Logs } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -44,29 +50,37 @@ export default function NavBottom() {
     },
     {
       title: "Others",
-      items: ["Air Conditioners", "Refrigerators", "Washing Machines", "Microwaves"],
+      items: [
+        "Air Conditioners",
+        "Refrigerators",
+        "Washing Machines",
+        "Microwaves",
+      ],
     },
   ];
   return (
-    <div>
+    <div className="border-t border-primary-foreground/10 text-primary-foreground">
       <div className="custom-width mx-auto flex items-center justify-between py-3 px-6">
         {/* Categories Dropdown (Desktop) */}
         <div className="hidden lg:block">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-primary">
-                  <Logs className="mr-2 w-4 h-4" />
-                  All Categories
+                <NavigationMenuTrigger className="flex items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-5 py-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-background">
+                  <Logs className="h-4 w-4" />
+                  <span>All categories</span>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-80 gap-3 p-4">
-                    {categories.map((category) => (
-                      <li key={category.title}>
-                        <div className="select-none space-y-1 rounded-md p-3 leading-none transition-colors hover:bg-accent focus:bg-accent">
+                  <ScrollArea className="h-[calc(100vh-500px)]">
+                    <ul className="grid w-80 gap-3 p-4 text-foreground">
+                      {categories.map((category) => (
+                        <li
+                          key={category.title}
+                          className="rounded-lg border border-primary/30 bg-primary/5 p-3 transition hover:border-primary/50"
+                        >
                           <Link
                             href={`/categories/${toSlug(category.title)}`}
-                            className="text-sm font-medium leading-none"
+                            className="text-sm font-semibold text-foreground"
                           >
                             {category.title}
                           </Link>
@@ -75,16 +89,16 @@ export default function NavBottom() {
                               <Link
                                 key={item}
                                 href={`/categories/${toSlug(item)}`}
-                                className="rounded-sm bg-muted px-2 py-1 transition-colors hover:bg-accent hover:text-accent-foreground"
+                                className="rounded-sm border border-primary/20 bg-background px-2 py-1 transition hover:border-primary/40 hover:text-primary"
                               >
                                 {item}
                               </Link>
                             ))}
                           </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </ScrollArea>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -92,30 +106,27 @@ export default function NavBottom() {
         </div>
 
         {/* Search Bar (Desktop) */}
-        <div className="hidden lg:flex flex-1 mx-8">
+        <div className="hidden flex-1 px-8 lg:flex">
           <div className="relative w-full">
-            <Input type="search" placeholder="Search the store" />
-            <Button size="icon" className="absolute right-0 top-0 rounded-l-none">
+            <Input
+              type="search"
+              placeholder="Search the marketplace"
+              className="h-11 rounded-full border-primary-foreground/15 bg-primary-foreground/10 pl-6 pr-14 text-sm font-medium text-foreground placeholder:text-foreground/60"
+            />
+            <Button
+              size="icon"
+              className="absolute right-1 top-1 h-9 w-9 rounded-full bg-primary text-primary-foreground shadow hover:bg-primary/90"
+            >
               <Search />
             </Button>
           </div>
         </div>
 
         {/* Action Icons (Desktop) */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Link href="/compare">
-            <Button size="icon">
-              <GitCompare />
-            </Button>
-          </Link>
+        <div className="hidden lg:flex items-center gap-3">
           <Link href="/wishlist">
-            <Button size="icon">
+            <Button className="flex items-center gap-2 rounded-full bg-primary px-5 py-5 text-sm font-semibold text-primary-foreground shadow-md transition hover:bg-primary/90">
               <Heart />
-            </Button>
-          </Link>
-          <Link href="/cart">
-            <Button size="icon">
-              <ShoppingBag />
             </Button>
           </Link>
         </div>
@@ -125,13 +136,20 @@ export default function NavBottom() {
           {/* Hamburger Menu */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
+              <Button
+                variant="outline"
+                size="icon"
+                className="border-white/30 bg-white/10 text-white hover:bg-white/20"
+              >
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="flex w/full max-w-xs flex-col gap-4 p-0">
+            <SheetContent
+              side="left"
+              className="flex w/full max-w-xs flex-col gap-4 border-primary-foreground/20 bg-primary/95 p-0 text-primary-foreground"
+            >
               <SheetHeader className="space-y-1 border-b border-border px-6 py-4">
-                <SheetTitle className="text-base font-semibold uppercase tracking-wide">
+                <SheetTitle className="text-base font-semibold uppercase tracking-wide text-primary-foreground/85">
                   Categories
                 </SheetTitle>
               </SheetHeader>
@@ -141,16 +159,16 @@ export default function NavBottom() {
                     <div key={category.title} className="space-y-3">
                       <Link
                         href={`/categories/${toSlug(category.title)}`}
-                        className="block font-semibold"
+                        className="block font-semibold text-primary-foreground"
                       >
                         {category.title}
                       </Link>
-                      <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                      <div className="flex flex-wrap gap-2 text-xs text-primary-foreground/70">
                         {category.items.map((item) => (
                           <Link
                             key={item}
                             href={`/categories/${toSlug(item)}`}
-                            className="rounded-full border border-border px-3 py-1 transition hover:border-primary"
+                            className="rounded-full border border-primary-foreground/20 px-3 py-1 transition hover:bg-primary/50"
                           >
                             {item}
                           </Link>
@@ -166,20 +184,32 @@ export default function NavBottom() {
           {/* Search Bar (Tablet) */}
           <div className="hidden md:flex flex-1 mx-4">
             <div className="relative w-full">
-              <Input type="search" placeholder="Search the store" />
-              <Button size="icon" className="absolute right-0 top-0 rounded-l-none">
+              <Input
+                type="search"
+                placeholder="Search the marketplace"
+                className="h-10 rounded-full border-primary-foreground/15 bg-primary-foreground/10 pr-11 text-sm font-medium text-foreground placeholder:text-foreground/60"
+              />
+              <Button
+                size="icon"
+                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+              >
                 <Search />
               </Button>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="md:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              className="border-white/30 bg-white/10 text-white hover:bg-white/20 md:hidden"
+            >
               <Search />
             </Button>
-            <Link href="/cart">
-              <Button size="icon">
-                <ShoppingBag />
+            <Link href="/wishlist">
+              <Button className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-primary shadow-md transition hover:bg-white">
+                <Heart className="h-4 w-4" />
+                <span className="hidden sm:inline">Saved</span>
               </Button>
             </Link>
           </div>

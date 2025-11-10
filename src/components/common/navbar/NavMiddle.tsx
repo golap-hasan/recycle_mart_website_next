@@ -1,7 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, Lock, Truck, Phone } from "lucide-react";
+import {
+  Menu,
+  MapPin,
+  MessageCircle,
+  User,
+  ListTree,
+  Globe,
+  PlusCircle,
+} from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
@@ -10,46 +19,65 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-const navLinks = [
-  { href: "/", label: "HOME" },
-  { href: "/shop", label: "SHOP" },
-  { href: "/features", label: "FEATURES" },
-  { href: "/about", label: "ABOUT" },
-  { href: "/contact", label: "CONTACT" },
-];
-
 const NavMiddle = () => {
   return (
-    <div>
+    <div className="text-white">
       <div className="custom-width mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <Link href="/">
-          <Image src="/logo.png" alt="e-market logo" width={150} height={40} />
+          <Image src="/logo.png" alt="ALL PRICE BD" width={100} height={20} />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} >
-              {link.label}
+        {/* Desktop Primary Actions */}
+        <div className="hidden lg:flex flex-1 items-center gap-6">
+          <div className="flex flex-1 items-center justify-center gap-3">
+            <Link
+              href="/ads"
+              className="group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/20"
+            >
+              <ListTree className="h-4 w-4 text-white/80" />
+              <span>Browse listings</span>
             </Link>
-          ))}
-        </nav>
-
-        {/* Utility Links */}
-        <div className="hidden lg:flex items-center gap-4 text-xs text-muted-foreground">
-          <Link href="/auth" className="flex items-center gap-2 hover:text-primary">
-            <Lock size={14} />
-            <span>Sign in or Register</span>
-          </Link>
-          <Link href="/track-order" className="hidden xl:flex items-center gap-2 hover:text-primary">
-            <Truck size={14} />
-            <span>Track your order</span>
-          </Link>
-          <div className="hidden xl:flex items-center gap-2 hover:text-primary">
-            <Phone size={14} />
-            <span>Hotline: (+84)985 432 141</span>
+            <button
+              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/20"
+              type="button"
+            >
+              <MapPin className="h-4 w-4 text-white/80" />
+              <span>All Bangladesh</span>
+            </button>
+            <Link
+              href="/language"
+              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/20"
+            >
+              <Globe className="h-4 w-4 text-white/80" />
+              <span>বাংলা</span>
+            </Link>
           </div>
+        </div>
+
+        {/* Desktop Utility Links */}
+        <div className="hidden lg:flex items-center gap-3 text-sm">
+          <Link
+            href="/chat"
+            className="flex items-center gap-2 rounded-full px-4 py-2 transition hover:bg-white/15"
+          >
+            <MessageCircle className="h-4 w-4" />
+            <span>Inbox</span>
+          </Link>
+          <Link
+            href="/account"
+            className="flex items-center gap-2 rounded-full px-4 py-2 transition hover:bg-white/15"
+          >
+            <User className="h-4 w-4" />
+            <span>Dashboard</span>
+          </Link>
+          <Button
+            size="sm"
+            className="flex items-center gap-2 rounded-full bg-linear-to-r from-amber-400 to-orange-500 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:from-amber-300 hover:to-orange-400"
+          >
+            <PlusCircle className="h-4 w-4" />
+            Create listing
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -59,7 +87,7 @@ const NavMiddle = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="border-border"
+                className="border-white/30 bg-white/10 text-white hover:bg-white/20"
               >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
@@ -67,7 +95,7 @@ const NavMiddle = () => {
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="w-[320px] border-border p-0"
+              className="w-[320px] border-white/20 bg-primary/95 p-0 text-white"
             >
               <SheetHeader className="px-6 py-4">
                 <SheetTitle className="flex items-center">
@@ -75,37 +103,70 @@ const NavMiddle = () => {
                     <Image
                       src="/logo.png"
                       alt="e-market logo"
-                      width={150}
-                      height={40}
+                      width={80}
+                      height={20}
                     />
                   </Link>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-1 flex-col">
-                <nav className="flex flex-col gap-3 px-6 py-6 text-base font-medium tracking-wide">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="rounded-md px-4 py-2 transition hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </nav>
-                <div className="mt-auto space-y-3 border-t border-border px-6 py-6 text-sm">
-                  <Link href="/auth" className="flex items-center gap-3 hover:text-primary">
-                    <Lock className="h-4 w-4" />
-                    <span>Sign in or Register</span>
-                  </Link>
-                  <Link href="/track-order" className="flex items-center gap-3 hover:text-primary">
-                    <Truck className="h-4 w-4" />
-                    <span>Track your order</span>
-                  </Link>
-                  <div className="flex items-center gap-3 text-xs uppercase tracking-wide hover:text-primary">
-                    <Phone className="h-4 w-4" />
-                    <span>Hotline: (+84)985 432 141</span>
+                <div className="flex flex-col gap-5 px-6 py-6">
+                  <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/85">
+                      Marketplace
+                    </p>
+                    <p>Connect with buyers & sellers near you.</p>
                   </div>
+
+                  <Link
+                    href="/ads"
+                    className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-base font-semibold transition hover:bg-white/15"
+                  >
+                    <ListTree className="h-5 w-5 text-white/80" />
+                    Explore listings
+                  </Link>
+
+                  <button
+                    type="button"
+                    className="flex items-center justify-between rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white"
+                  >
+                    <span className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-white/80" />
+                      All Bangladesh
+                    </span>
+                    <span className="text-xs text-white/70">Change</span>
+                  </button>
+
+                  <Link
+                    href="/language"
+                    className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                  >
+                    <Globe className="h-4 w-4 text-white/80" />
+                    বাংলা
+                  </Link>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link
+                      href="/chat"
+                      className="flex items-center gap-2 rounded-xl border border-white/20 px-4 py-3 text-sm transition hover:bg-white/15"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Inbox
+                    </Link>
+                    <Link
+                      href="/account"
+                      className="flex items-center gap-2 rounded-xl border border-white/20 px-4 py-3 text-sm transition hover:bg-white/15"
+                    >
+                      <User className="h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </div>
+                </div>
+                <div className="mt-auto border-t border-border px-6 py-6">
+                  <Button className="w-full gap-2 rounded-full bg-linear-to-r from-amber-400 to-orange-500 text-base font-semibold text-white shadow-lg hover:from-amber-300 hover:to-orange-400">
+                    <PlusCircle className="h-5 w-5" />
+                    Create listing
+                  </Button>
                 </div>
               </div>
             </SheetContent>

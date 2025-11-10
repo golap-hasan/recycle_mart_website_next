@@ -47,17 +47,24 @@ export default function NavTop() {
     : "transition-none";
 
   return (
-    <section className="border-b">
+    <section className="border-b border-white/15 text-white">
       {/* Mobile Top Row */}
-      <div className="flex md:hidden h-10 items-center justify-end px-4 text-sm">
+      <div className="flex md:hidden h-10 items-center justify-end px-4 text-sm text-white">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="text-xs">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-white hover:text-white/80"
+            >
               My Account
               <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            className="border-border bg-background text-foreground"
+          >
             <DropdownMenuItem>Check Out</DropdownMenuItem>
             <DropdownMenuItem>Sign In</DropdownMenuItem>
             <DropdownMenuItem>Register</DropdownMenuItem>
@@ -68,7 +75,7 @@ export default function NavTop() {
           <Button
             variant="ghost"
             size="icon"
-            className="group relative rounded-full h-6 w-6"
+            className="group relative rounded-full h-7 w-7 bg-white/10 text-white hover:bg-white/15"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
@@ -87,7 +94,7 @@ export default function NavTop() {
           </Button>
         )}
       </div>
-      <div className="custom-width mx-auto hidden md:flex h-9 text-sm items-center justify-between px-6">
+      <div className="custom-width mx-auto hidden md:flex h-9 items-center justify-between px-6 text-sm text-white">
         <div className="relative h-full min-w-0 flex-1 overflow-hidden">
           <span
             className={`absolute inset-0 flex items-center ${transitionClass} ${
@@ -105,8 +112,12 @@ export default function NavTop() {
           </span>
         </div>
 
-        <div className="flex h-5 items-center space-x-4 text-sm">
-          <Button variant="ghost" size="sm" className="tracking-widest text-xs">
+        <div className="flex h-5 items-center space-x-4 text-sm text-white">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="tracking-widest text-xs text-white hover:text-white/80"
+          >
             GIFT CERTIFICATES
           </Button>
           <Separator orientation="vertical" />
@@ -116,12 +127,15 @@ export default function NavTop() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="tracking-widest text-xs"
+                className="tracking-widest text-xs text-white hover:text-white/80"
               >
                 MY ACCOUNT
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent
+              align="end"
+              className="border-border bg-background text-foreground"
+            >
               <DropdownMenuItem>Check Out</DropdownMenuItem>
               <DropdownMenuItem>Sign In</DropdownMenuItem>
               <DropdownMenuItem>Register</DropdownMenuItem>
@@ -133,7 +147,7 @@ export default function NavTop() {
             <Button
               variant="ghost"
               size="icon"
-              className="group relative rounded-full h-7 w-7"
+              className="group relative rounded-full h-8 w-8 bg-white/10 text-white hover:bg-white/15"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label={`Switch to ${
                 theme === "dark" ? "light" : "dark"

@@ -4,7 +4,7 @@ import NavTop from "./NavTop";
 
 export default function Navbar() {
   return (
-    <header>
+    <header className="bg-primary text-white">
       <NavTop />
       <NavMiddle />
       <NavBottom />
