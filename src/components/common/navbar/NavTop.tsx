@@ -120,7 +120,7 @@ export default function NavTop() {
           >
             GIFT CERTIFICATES
           </Button>
-          <Separator orientation="vertical" />
+          <Separator orientation="vertical" className="bg-white" />
           {/* <div className="h-4 w-px bg-border"></div> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -142,7 +142,7 @@ export default function NavTop() {
             </DropdownMenuContent>
           </DropdownMenu>
           {/* <div className="h-4 w-px bg-border"></div> */}
-          <Separator orientation="vertical" />
+          <Separator orientation="vertical" className="bg-white" />
           {mounted && (
             <Button
               variant="ghost"
