@@ -116,7 +116,7 @@ export default function NavTop() {
           <Button
             variant="ghost"
             size="sm"
-            className="tracking-widest text-xs text-white hover:text-white/80"
+            className="tracking-widest text-xs text-white"
           >
             GIFT CERTIFICATES
           </Button>
@@ -127,7 +127,7 @@ export default function NavTop() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="tracking-widest text-xs text-white hover:text-white/80"
+                className="tracking-widest text-xs text-white"
               >
                 MY ACCOUNT
               </Button>

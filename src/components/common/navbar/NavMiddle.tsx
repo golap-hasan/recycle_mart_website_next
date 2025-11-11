@@ -79,10 +79,10 @@ const NavMiddle = () => {
           </Link>
           <Button
             size="sm"
-            className="flex items-center gap-2 rounded-full bg-linear-to-r from-pink-400 to-orange-500 px-5 py-4 text-sm font-semibold text-white hover:from-pink-300 hover:to-orange-400"
+            className="flex items-center gap-2 rounded-full bg-linear-to-r from-pink-400 to-orange-500 px-5 py-4.5 text-sm font-semibold text-white hover:from-pink-300 hover:to-orange-400"
           >
             <PlusCircle className="h-4 w-4" />
-            Create listing
+            Post Add Free
           </Button>
         </div>
 
@@ -171,7 +171,7 @@ const NavMiddle = () => {
                 <div className="mt-auto border-t border-border px-6 py-6">
                   <Button className="w-full gap-2 rounded-full bg-linear-to-r from-pink-400 to-orange-500 text-base font-semibold text-white shadow-lg hover:from-pink-300 hover:to-orange-400">
                     <PlusCircle className="h-5 w-5" />
-                    Create listing
+                    Post Add Free
                   </Button>
                 </div>
               </div>
