@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
-import { X } from "lucide-react";
+import { X, SlidersHorizontal } from "lucide-react";
 
 export type FilterOption = {
   label: string;
@@ -20,6 +21,20 @@ export type FilterGroup = {
   sliderRange?: [number, number];
   sliderStep?: number;
 };
+
+export const sortOptions = [
+  { value: "newest", label: "Date: Newest first" },
+  { value: "oldest", label: "Date: Oldest first" },
+  { value: "price-low", label: "Price: Low to High" },
+  { value: "price-high", label: "Price: High to Low" },
+];
+
+export const locationOptions = [
+  { value: "dhaka", label: "Dhaka" },
+  { value: "chattogram", label: "Chattogram" },
+  { value: "sylhet", label: "Sylhet" },
+  { value: "rajshahi", label: "Rajshahi" },
+];
 
 const defaultFilters: FilterGroup[] = [
   {
@@ -60,9 +75,123 @@ export type SelectedFilters = {
 type FiltersProps = {
   groups?: FilterGroup[];
   onChange?: (selected: SelectedFilters) => void;
+  showAsSheet?: boolean;
 };
 
-const Filters = ({ groups = defaultFilters, onChange }: FiltersProps) => {
+type FiltersContentProps = {
+  appliedCount: number;
+  selected: SelectedFilters;
+  selectedChips: { groupId: string; value: string }[];
+  groups: FilterGroup[];
+  updateSelection: (groupId: string, value: string) => void;
+  updateSlider: (groupId: string, value: number[]) => void;
+  clearFilters: () => void;
+};
+
+const FiltersContent = ({
+  appliedCount,
+  selected,
+  selectedChips,
+  groups,
+  updateSelection,
+  updateSlider,
+  clearFilters
+}: FiltersContentProps) => (
+  <>
+    <header className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-semibold text-foreground">Refine Results</p>
+        <p className="text-xs text-muted-foreground">{appliedCount} filter{appliedCount === 1 ? "" : "s"} applied</p>
+      </div>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-xs text-muted-foreground hover:text-primary"
+        onClick={clearFilters}
+      >
+        Reset
+      </Button>
+    </header>
+
+    <Accordion type="multiple" defaultValue={groups.map((group) => group.id)} className="space-y-4">
+      {groups.map((group) => (
+        <AccordionItem key={group.id} value={group.id} className="rounded-2xl border border-border/40 bg-background">
+          <AccordionTrigger className="px-4 py-3 text-sm font-semibold text-foreground">
+            {group.title}
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4">
+            {group.type === "checkbox" && group.options ? (
+              <ul className="space-y-3">
+                {group.options.map((option) => {
+                  const isChecked = (selected[group.id] as string[] | undefined)?.includes(option.value);
+                  return (
+                    <li key={option.value} className="flex items-center gap-3">
+                      <Checkbox
+                        id={`${group.id}-${option.value}`}
+                        checked={isChecked}
+                        onCheckedChange={() => updateSelection(group.id, option.value)}
+                      />
+                      <label
+                        htmlFor={`${group.id}-${option.value}`}
+                        className="text-sm text-muted-foreground"
+                      >
+                        {option.label}
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+
+            {group.type === "slider" && group.sliderRange ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-foreground">Select Range</span>
+                    <span className="text-xs text-muted-foreground">
+                      ৳ {(selected[group.id] as number[])?.[0]?.toLocaleString() ?? group.sliderRange[0].toLocaleString()} - 
+                      ৳ {(selected[group.id] as number[])?.[1]?.toLocaleString() ?? group.sliderRange[1].toLocaleString()}
+                    </span>
+                  </div>
+                  <Slider
+                    min={group.sliderRange[0]}
+                    max={group.sliderRange[1]}
+                    step={group.sliderStep ?? 1}
+                    value={(selected[group.id] as number[]) ?? [group.sliderRange[0], group.sliderRange[1]]}
+                    onValueChange={(value) => updateSlider(group.id, value)}
+                    className="w-full"
+                  />
+                </div>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Min: ৳ {group.sliderRange[0].toLocaleString()}</span>
+                  <span>Max: ৳ {group.sliderRange[1].toLocaleString()}</span>
+                </div>
+              </div>
+            ) : null}
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+
+    {selectedChips.length > 0 ? (
+      <div className="flex flex-wrap gap-2">
+        {selectedChips.map(({ groupId, value }) => (
+          <button
+            key={`${groupId}-${value}`}
+            type="button"
+            className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            onClick={() => updateSelection(groupId, value)}
+          >
+            {value}
+            <X className="h-3 w-3" />
+          </button>
+        ))}
+      </div>
+    ) : null}
+  </>
+);
+
+const Filters = ({ groups = defaultFilters, showAsSheet = false }: FiltersProps) => {
   const [selected, setSelected] = useState<SelectedFilters>({});
 
   const appliedCount = useMemo(
@@ -108,102 +237,49 @@ const Filters = ({ groups = defaultFilters, onChange }: FiltersProps) => {
     setSelected({});
   };
 
-  useEffect(() => {
-    onChange?.(selected);
-  }, [selected, onChange]);
+  if (showAsSheet) {
+    return (
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="sm" className="lg:hidden">
+            <SlidersHorizontal className="h-4 w-4 mr-2" />
+            Filters
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-[85%] sm:max-w-[85%]">
+          <SheetHeader>
+            <SheetTitle>Filters</SheetTitle>
+            <SheetDescription>
+              Select up to 5 filters to refine your search.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="space-y-6 px-6">
+            <FiltersContent
+              appliedCount={appliedCount}
+              selected={selected}
+              selectedChips={selectedChips}
+              groups={groups}
+              updateSelection={updateSelection}
+              updateSlider={updateSlider}
+              clearFilters={clearFilters}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
 
   return (
     <aside className="space-y-6 rounded-3xl border border-border/40 bg-background/80 p-6 shadow-sm">
-      <header className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold text-foreground">Refine Results</p>
-          <p className="text-xs text-muted-foreground">{appliedCount} filter{appliedCount === 1 ? "" : "s"} applied</p>
-        </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs text-muted-foreground hover:text-primary"
-          onClick={clearFilters}
-        >
-          Reset
-        </Button>
-      </header>
-
-      <Accordion type="multiple" defaultValue={groups.map((group) => group.id)} className="space-y-4">
-        {groups.map((group) => (
-          <AccordionItem key={group.id} value={group.id} className="rounded-2xl border border-border/40 bg-background">
-            <AccordionTrigger className="px-4 py-3 text-sm font-semibold text-foreground">
-              {group.title}
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4">
-              {group.type === "checkbox" && group.options ? (
-                <ul className="space-y-3">
-                  {group.options.map((option) => {
-                    const isChecked = (selected[group.id] as string[] | undefined)?.includes(option.value);
-                    return (
-                      <li key={option.value} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`${group.id}-${option.value}`}
-                          checked={isChecked}
-                          onCheckedChange={() => updateSelection(group.id, option.value)}
-                        />
-                        <label
-                          htmlFor={`${group.id}-${option.value}`}
-                          className="text-sm text-muted-foreground"
-                        >
-                          {option.label}
-                        </label>
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : null}
-
-              {group.type === "slider" && group.sliderRange ? (
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-foreground">Select Range</span>
-                      <span className="text-xs text-muted-foreground">
-                        ৳ {(selected[group.id] as number[])?.[0]?.toLocaleString() ?? group.sliderRange[0].toLocaleString()} - 
-                        ৳ {(selected[group.id] as number[])?.[1]?.toLocaleString() ?? group.sliderRange[1].toLocaleString()}
-                      </span>
-                    </div>
-                    <Slider
-                      min={group.sliderRange[0]}
-                      max={group.sliderRange[1]}
-                      step={group.sliderStep ?? 1}
-                      value={(selected[group.id] as number[]) ?? [group.sliderRange[0], group.sliderRange[1]]}
-                      onValueChange={(value) => updateSlider(group.id, value)}
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Min: ৳ {group.sliderRange[0].toLocaleString()}</span>
-                    <span>Max: ৳ {group.sliderRange[1].toLocaleString()}</span>
-                  </div>
-                </div>
-              ) : null}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-
-      {selectedChips.length > 0 ? (
-        <div className="flex flex-wrap gap-2">
-          {selectedChips.map(({ groupId, value }) => (
-            <button
-              key={`${groupId}-${value}`}
-              type="button"
-              className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
-              onClick={() => updateSelection(groupId, value)}
-            >
-              {value}
-              <X className="h-3 w-3" />
-            </button>
-          ))}
-        </div>
-      ) : null}
+      <FiltersContent
+        appliedCount={appliedCount}
+        selected={selected}
+        selectedChips={selectedChips}
+        groups={groups}
+        updateSelection={updateSelection}
+        updateSlider={updateSlider}
+        clearFilters={clearFilters}
+      />
     </aside>
   );
 };

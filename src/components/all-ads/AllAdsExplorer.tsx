@@ -10,19 +10,32 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ListTree, Search, Grid3X3, List, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import ListingCard, { ListingCardProps } from "@/components/all-ads/listing-card";
+import { sortOptions as defaultSortOptions, locationOptions as defaultLocationOptions } from "@/components/all-ads/filters";
 
 const Filters = dynamic(() => import("@/components/all-ads/filters"), { ssr: false });
 
 type Option = { value: string; label: string };
 
 type Props = {
-  listings: ListingCardProps[];
-  sortOptions: Option[];
-  locationOptions: Option[];
+  listings: {
+    id: string;
+    title: string;
+    price: string;
+    location: string;
+    postedAt: string;
+    imageUrl: string;
+    isFeatured?: boolean;
+    isUrgent?: boolean;
+  }[];
+  sortOptions?: Option[];
+  locationOptions?: Option[];
 };
 
-export default function AllAdsExplorer({ listings, sortOptions, locationOptions }: Props) {
+export default function AllAdsExplorer({ 
+  listings, 
+  sortOptions = defaultSortOptions, 
+  locationOptions = defaultLocationOptions 
+}: Props) {
   return (
     <section>
       <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -50,7 +63,7 @@ export default function AllAdsExplorer({ listings, sortOptions, locationOptions 
           </TabsTrigger>
         </TabsList>
 
-        <div className="flex flex-col gap-4 rounded-3xl border border-border/30 bg-background/80 p-4">
+        <div className="flex flex-col gap-4 bg-background/80">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-3 text-sm text-muted-foreground">
               <span className="text-foreground">Sort by:</span>
@@ -95,10 +108,17 @@ export default function AllAdsExplorer({ listings, sortOptions, locationOptions 
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-            <div className="order-2 lg:order-1">
+            {/* Mobile Filter Button */}
+            <div className="lg:hidden">
+              <Filters showAsSheet={true} />
+            </div>
+            
+            {/* Filter */}
+            <div className="hidden lg:block">
               <Filters />
             </div>
 
+            {/* Ads */}
             <TabsContent value="list" className="order-1 space-y-6 lg:order-2">
               <div className="grid gap-4 grid-cols-1">
                 {listings.map((listing) => (
@@ -150,10 +170,47 @@ export default function AllAdsExplorer({ listings, sortOptions, locationOptions 
               </Card>
             </TabsContent>
 
+            {/* Grid View */}
             <TabsContent value="grid" className="order-1 space-y-6 lg:order-2">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {listings.map((listing) => (
-                  <ListingCard key={`${listing.id}-grid`} {...listing} />
+                  <article key={listing.id} className="group relative overflow-hidden rounded-3xl border border-border/40 bg-background/90 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                    <Link href={`/all-ads/${listing.id}`} className="flex h-full flex-col">
+                      <div className="relative aspect-4/3 overflow-hidden">
+                        <Image
+                          src={listing.imageUrl}
+                          alt={listing.title}
+                          fill
+                          unoptimized
+                          className="object-cover transition duration-300 group-hover:scale-105"
+                          sizes="(min-width: 1024px) 320px, (min-width: 768px) 45vw, 90vw"
+                        />
+                        <div className="absolute left-4 top-4 flex gap-2">
+                          {listing.isFeatured ? <Badge className="rounded-full bg-amber-500 text-white">Featured</Badge> : null}
+                          {listing.isUrgent ? <Badge className="rounded-full bg-red-500 text-white">Urgent</Badge> : null}
+                        </div>
+                        <button
+                          type="button"
+                          className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/40 bg-background/80 text-muted-foreground shadow-sm transition hover:text-primary"
+                        >
+                          <Heart className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="flex flex-1 flex-col gap-3 p-5">
+                        <div className="space-y-1">
+                          <h3 className="line-clamp-2 text-base font-semibold text-foreground">{listing.title}</h3>
+                          <p className="text-sm font-bold text-primary">{listing.price}</p>
+                        </div>
+                        <div className="mt-auto space-y-1 text-xs text-muted-foreground">
+                          <p className="flex items-center gap-2">
+                            <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
+                            {listing.location}
+                          </p>
+                          <p className="text-muted-foreground/80">Posted {listing.postedAt}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </article>
                 ))}
               </div>
             </TabsContent>

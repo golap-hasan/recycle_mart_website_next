@@ -56,29 +56,6 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             </Button>
           </>
         )}
-
-        {/* Zoom Button - Temporarily removed due to Dialog issue */}
-        {/* <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute top-4 right-4 h-8 w-8 rounded-full bg-white/90 hover:bg-white shadow-lg"
-            >
-              <ZoomIn className="h-4 w-4" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] p-0">
-            <div className="relative aspect-4/3">
-              <Image
-                src={images[currentIndex]}
-                alt={`${title} - Zoomed`}
-                fill
-                className="object-contain"
-              />
-            </div>
-          </DialogContent>
-        </Dialog> */}
       </div>
 
       {/* Thumbnail Gallery */}
