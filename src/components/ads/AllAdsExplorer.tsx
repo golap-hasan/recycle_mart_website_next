@@ -10,9 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ListTree, Search, Grid3X3, List, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { sortOptions as defaultSortOptions, locationOptions as defaultLocationOptions } from "@/components/all-ads/filters";
+import { sortOptions as defaultSortOptions, locationOptions as defaultLocationOptions } from "@/components/ads/filters";
 
-const Filters = dynamic(() => import("@/components/all-ads/filters"), { ssr: false });
+const Filters = dynamic(() => import("@/components/ads/filters"), { ssr: false });
 
 type Option = { value: string; label: string };
 

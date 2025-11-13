@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import CustomBreadcrumb from "@/tools/CustomBreadcrumb";
 import PageLayout from "@/tools/PageLayout";
-import SellerInfo from "@/components/all-ads/details/SellerInfo";
-import RelatedAds from "@/components/all-ads/details/RelatedAds";
+import SellerInfo from "@/components/ads/details/SellerInfo";
+import RelatedAds from "@/components/ads/details/RelatedAds";
 import Image from "next/image";
 
 // Sample ad data - in real app, this would come from API/database

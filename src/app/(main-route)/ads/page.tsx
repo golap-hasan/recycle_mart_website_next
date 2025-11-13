@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import CustomBreadcrumb from "@/tools/CustomBreadcrumb";
-import AllAdsExplorer from "@/components/all-ads/AllAdsExplorer";
+import AllAdsExplorer from "@/components/ads/AllAdsExplorer";
 import PageLayout from "@/tools/PageLayout";
-import { sampleListings } from "@/components/all-ads/adsData";
-import { sortOptions, locationOptions } from "@/components/all-ads/filters";
+import { sampleListings } from "@/components/ads/adsData";
+import { sortOptions, locationOptions } from "@/components/ads/filters";
 
 export const metadata: Metadata = {
   title: "All Ads | All Price BD",
