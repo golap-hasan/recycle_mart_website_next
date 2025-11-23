@@ -72,7 +72,7 @@ const Footer = () => {
       <div className="relative">
         <div className="flex flex-col gap-8 px-6 py-8">
 
-          <div className="container max-w-7xl mx-auto grid gap-12 text-sm text-muted-foreground lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
+          <div className="container mx-auto grid gap-12 text-sm text-muted-foreground lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
             <div className="space-y-5 text-foreground">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -119,7 +119,7 @@ const Footer = () => {
 
           <Separator className="bg-border/30" />
 
-          <div className="container max-w-7xl mx-auto flex flex-col items-center justify-between gap-4 text-xs sm:flex-row">
+          <div className="container mx-auto flex flex-col items-center justify-between gap-4 text-xs sm:flex-row">
             <p className="text-center sm:text-left">
               © {new Date().getFullYear()} All Price BD. All rights reserved.
             </p>

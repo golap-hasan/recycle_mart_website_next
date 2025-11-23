@@ -159,7 +159,7 @@ const Category = () => {
             ))}
           </div>
 
-          <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+          <div className="mx-auto grid container gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {categories.flatMap(({ title, accent, items }) =>
               items.map(({ label, icon: ItemIcon }) => (
                 <Link
