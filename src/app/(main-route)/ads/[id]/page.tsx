@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import {
-  ArrowLeft,
   Heart,
   Share2,
   Phone,
@@ -85,15 +83,6 @@ export default async function AdDetailsPage({ params }: Props) {
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Back Button */}
-            <Link
-              href="/ads"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Ads
-            </Link>
-
             {/* Image Gallery */}
             <ImageGallery images={ad.images} title={ad.title} />
           </div>

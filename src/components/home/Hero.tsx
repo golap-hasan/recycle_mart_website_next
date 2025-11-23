@@ -9,7 +9,6 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import PageLayout from "@/tools/PageLayout";
 
 const heroSlides = [
   {
@@ -86,13 +85,13 @@ const Hero = () => {
 
   return (
     <section className="relative overflow-hidden">
-      <PageLayout className="relative">
-        <div className="grid items-stretch gap-6 lg:grid-cols-[220px_minmax(0,1fr)_220px]">
+      <div className="relative">
+        <div className="grid items-stretch lg:grid-cols-[220px_minmax(0,1fr)_220px]">
           <aside className="hidden lg:block h-full">
             <SideAdLink {...leftAd} />
           </aside>
 
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-card">
+          <div className="relative overflow-hidden">
             <Carousel
               className="w-full"
               setApi={setCarouselApi}
@@ -106,7 +105,7 @@ const Hero = () => {
                   <CarouselItem key={slide.id} className="pl-0">
                     <Link
                       href={slide.href}
-                      className="group block overflow-hidden rounded-3xl h-[500px]"
+                      className="group block overflow-hidden h-[600px]"
                     >
                       <Image
                         src={slide.imageSrc}
@@ -115,7 +114,7 @@ const Hero = () => {
                         height={480}
                         unoptimized
                         priority={slide.id === 1}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover"
                       />
                     </Link>
                   </CarouselItem>
@@ -133,7 +132,7 @@ const Hero = () => {
           <SideAdLink {...leftAd} />
           <SideAdLink {...rightAd} />
         </div>
-      </PageLayout>
+      </div>
     </section>
   );
 };
@@ -141,7 +140,7 @@ const Hero = () => {
 const SideAdLink = ({ href, imageSrc, alt }: SideAd) => (
   <Link
     href={href}
-    className="group block h-[500px] overflow-hidden rounded-3xl border border-border bg-card transition hover:border-primary/40"
+    className="hidden md:block h-[600px] overflow-hidden"
   >
     <Image
       src={imageSrc}

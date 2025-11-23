@@ -50,7 +50,7 @@ export default function RelatedAds({ currentAdId, category }: RelatedAdsProps) {
   if (relatedAds.length === 0) return null;
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 mt-12">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Related Ads</h2>
         <Link
