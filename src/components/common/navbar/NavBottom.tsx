@@ -54,7 +54,7 @@ export default function NavBottom() {
   ];
   return (
     <div className="border-t border-white/15 text-white">
-      <div className="mx-auto flex custom-width items-center justify-between py-3 px-5">
+      <div className="mx-auto flex container items-center justify-between py-3 px-5">
         {/* Categories Dropdown (Desktop) */}
         <div className="hidden lg:block">
           <Popover>

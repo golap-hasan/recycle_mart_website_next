@@ -22,12 +22,12 @@ import {
 const NavMiddle = () => {
   return (
     <div className="text-white">
-      <div className="custom-width mx-auto flex items-center justify-between py-4 px-5">
+      <div className="container mx-auto flex items-center justify-between py-4 px-5">
         {/* Logo */}
         <Link href="/">
           <Image
             src="/logo.png"
-            alt="ALL PRICE BD"
+            alt="Recycle Mart"
             width={100}
             height={20}
             className="h-10 md:h-20 w-auto"
@@ -71,7 +71,7 @@ const NavMiddle = () => {
             <span>Inbox</span>
           </Link>
           <Link
-            href="/account"
+            href="/profile"
             className="flex items-center gap-2 rounded-full px-4 py-2 transition hover:bg-white/15"
           >
             <User className="h-4 w-4" />
