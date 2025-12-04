@@ -10,8 +10,42 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Recycle Mart | Home",
-  description: "Purchase Products online from Ecommerce.",
+  title: {
+    default: "Recycle Mart - Buy & Sell Everything in Bangladesh",
+    template: "%s | Recycle Mart",
+  },
+  description:
+    "Recycle Mart is Bangladesh's most trusted online marketplace. Buy and sell used electronics, vehicles, property, home appliances, and more. Safe, fast, and easy local trading.",
+  keywords: [
+    "Recycle Mart",
+    "Online Marketplace",
+    "Buy and Sell",
+    "Bangladesh",
+    "Used Electronics",
+    "Second hand cars",
+    "Property for sale",
+    "Dhaka",
+    "Chittagong",
+    "Sylhet",
+  ],
+  authors: [{ name: "SmartEdge Technologies" }],
+  creator: "SmartEdge Technologies",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://recyclemart.bd",
+    title: "Recycle Mart - Buy & Sell Everything in Bangladesh",
+    description:
+      "Join millions of users on Recycle Mart to buy and sell used goods, find jobs, or rent properties in Bangladesh.",
+    siteName: "Recycle Mart",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Recycle Mart - Buy & Sell Everything in Bangladesh",
+    description:
+      "Bangladesh's trusted marketplace for buying and selling everything.",
+    creator: "@recyclemartbd",
+  },
 };
 
 export default function RootLayout({
