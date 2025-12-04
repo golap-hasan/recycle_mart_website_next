@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, X } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -61,6 +61,9 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [tradeLicencePreview, setTradeLicencePreview] = useState<string | null>(null);
+  const [storeImagePreview, setStoreImagePreview] = useState<string | null>(null);
+  
   const togglePasswordVisibility = () =>
     setShowPassword((previous) => !previous);
 
@@ -100,16 +103,16 @@ const Register = () => {
       <div className="pointer-events-none absolute bottom-24 left-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute top-24 right-1/3 h-80 w-80 translate-x-1/2 rounded-full bg-primary/15 blur-[120px]" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-4xl items-center justify-center px-4 sm:px-6 lg:px-8">
-        <Card className="relative w-full overflow-hidden">
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl h-[95vh] sm:h-full justify-center p-4 sm:p-6 lg:p-8">
+        <Card className="relative w-full">
           <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-primary/10 via-transparent to-primary/5 opacity-60" />
-          <CardContent className="relative z-10">
+          <CardContent className="relative z-10 p-3 sm:p-6 max-h-screen overflow-y-auto">
             <div className="flex items-center justify-between gap-4">
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Link href="/auth/login">
-                  <ArrowLeft className="size-4" />
-                </Link>
-              </Button>
+              <Link href="/auth/login">
+                <Button variant="ghost" size="icon">
+                  <ArrowLeft />
+                </Button>
+              </Link>
               <Link
                 href="/support/faqs"
                 className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground transition hover:text-primary"
@@ -118,14 +121,14 @@ const Register = () => {
               </Link>
             </div>
 
-            <div className="mt-6 space-y-3 text-center">
-              <Badge className="rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+            <div className="mt-3 space-y-1.5 text-center sm:mt-6 sm:space-y-3">
+              <Badge className="bg-primary/10 px-4 py-1 font-semibold uppercase tracking-[0.35em] text-primary">
                 Join Recycle Mart
               </Badge>
-              <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
+              <h2 className="text-xl font-semibold text-foreground sm:text-2xl md:text-3xl">
                 Create your account
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground sm:text-sm">
                 Choose buyer or vendor mode, then share the essentials so we can tailor your experience.
               </p>
             </div>
@@ -133,26 +136,26 @@ const Register = () => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="mt-8 space-y-6"
+                className="mt-4 space-y-3 sm:mt-8 sm:space-y-6"
               >
                 <Tabs defaultValue="USER" className="w-full" onValueChange={(value) => form.setValue("role", value as "USER" | "VENDOR")}>
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="USER" className="text-sm font-medium">Buyer</TabsTrigger>
-                    <TabsTrigger value="VENDOR" className="text-sm font-medium">Vendor</TabsTrigger>
+                    <TabsTrigger value="USER">Buyer</TabsTrigger>
+                    <TabsTrigger value="VENDOR">Vendor</TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="USER" className="space-y-6 mt-6">
-                    <div className="grid gap-4 md:grid-cols-2">
+                  <TabsContent value="USER" className="mt-3 sm:mt-6 space-y-6">
+                    <div className="grid gap-6 sm:gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
                         name="fullname"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Full name
                             </FormLabel>
                             <FormControl>
-                              <Input placeholder="Jane Rahman" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input placeholder="Jane Rahman" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -163,12 +166,12 @@ const Register = () => {
                         control={form.control}
                         name="email"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Email
                             </FormLabel>
                             <FormControl>
-                              <Input type="email" placeholder="student@example.com" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input type="email" placeholder="student@example.com" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -179,12 +182,12 @@ const Register = () => {
                         control={form.control}
                         name="phone"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Phone number
                             </FormLabel>
                             <FormControl>
-                              <Input type="tel" placeholder="01XXXXXXXXX" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input type="tel" placeholder="01XXXXXXXXX" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -195,8 +198,8 @@ const Register = () => {
                         control={form.control}
                         name="password"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Password
                             </FormLabel>
                             <FormControl>
@@ -204,7 +207,6 @@ const Register = () => {
                                 <Input
                                   type={showPassword ? "text" : "password"}
                                   placeholder="Create a secure password"
-                                  className="h-11 rounded-2xl px-4 pr-12"
                                   {...field}
                                 />
                                 <button
@@ -230,22 +232,18 @@ const Register = () => {
                     </div>
                   </TabsContent>
 
-                  <TabsContent value="VENDOR" className="space-y-6 mt-6">
-                    <div className="rounded-2xl border border-border/60 bg-muted/10 p-4 text-sm text-muted-foreground">
-                      Provide your business details so buyers can trust and find you easily.
-                    </div>
-
-                    <div className="grid gap-4 md:grid-cols-2">
+                  <TabsContent value="VENDOR" className="mt-3 sm:mt-6 space-y-6">
+                    <div className="grid gap-6 sm:gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
                         name="fullname"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Full name
                             </FormLabel>
                             <FormControl>
-                              <Input placeholder="Jane Rahman" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input placeholder="Jane Rahman" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -256,12 +254,12 @@ const Register = () => {
                         control={form.control}
                         name="email"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Email
                             </FormLabel>
                             <FormControl>
-                              <Input type="email" placeholder="student@example.com" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input type="email" placeholder="student@example.com" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -272,12 +270,12 @@ const Register = () => {
                         control={form.control}
                         name="phone"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Phone number
                             </FormLabel>
                             <FormControl>
-                              <Input type="tel" placeholder="01XXXXXXXXX" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input type="tel" placeholder="01XXXXXXXXX" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -288,8 +286,8 @@ const Register = () => {
                         control={form.control}
                         name="password"
                         render={({ field }) => (
-                          <FormItem className="space-y-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          <FormItem>
+                            <FormLabel>
                               Password
                             </FormLabel>
                             <FormControl>
@@ -297,7 +295,6 @@ const Register = () => {
                                 <Input
                                   type={showPassword ? "text" : "password"}
                                   placeholder="Create a secure password"
-                                  className="h-11 rounded-2xl px-4 pr-12"
                                   {...field}
                                 />
                                 <button
@@ -328,19 +325,78 @@ const Register = () => {
                           field: { onChange, onBlur, name, ref },
                         }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                              Trade licence (image upload)
+                            <FormLabel>
+                              Trade licence
                             </FormLabel>
                             <FormControl>
-                              <Input
-                                type="file"
-                                accept="image/*"
-                                className="h-11 rounded-2xl"
-                                onChange={(event) => onChange(event.target.files?.[0] ?? null)}
-                                onBlur={onBlur}
-                                name={name}
-                                ref={ref}
-                              />
+                              <div className="relative">
+                                {tradeLicencePreview ? (
+                                  <div className="relative rounded-2xl border-2 border-border/60 bg-muted/10 p-2">
+                                    <img
+                                      src={tradeLicencePreview}
+                                      alt="Trade licence preview"
+                                      className="h-40 w-full rounded-xl object-cover"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setTradeLicencePreview(null);
+                                        onChange(null);
+                                      }}
+                                      className="absolute right-3 top-3 rounded-full bg-destructive p-1.5 text-white transition-colors hover:bg-destructive/90"
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <label
+                                    htmlFor="tradeLicence"
+                                    className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border/60 bg-muted/10 p-6 transition-colors hover:border-primary/40 hover:bg-muted/20"
+                                  >
+                                    <svg
+                                      className="h-8 w-8 text-muted-foreground"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                      />
+                                    </svg>
+                                    <div className="text-center">
+                                      <p className="text-sm font-medium text-foreground">
+                                        Upload trade licence
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        PNG, JPG up to 10MB
+                                      </p>
+                                    </div>
+                                  </label>
+                                )}
+                                <Input
+                                  id="tradeLicence"
+                                  type="file"
+                                  accept="image/*"
+                                  className="sr-only"
+                                  onChange={(event) => {
+                                    const file = event.target.files?.[0] ?? null;
+                                    onChange(file);
+                                    if (file) {
+                                      const reader = new FileReader();
+                                      reader.onloadend = () => {
+                                        setTradeLicencePreview(reader.result as string);
+                                      };
+                                      reader.readAsDataURL(file);
+                                    }
+                                  }}
+                                  onBlur={onBlur}
+                                  name={name}
+                                  ref={ref}
+                                />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -354,19 +410,78 @@ const Register = () => {
                           field: { onChange, onBlur, name, ref },
                         }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                            <FormLabel>
                               Storefront image
                             </FormLabel>
                             <FormControl>
-                              <Input
-                                type="file"
-                                accept="image/*"
-                                className="h-11 rounded-2xl"
-                                onChange={(event) => onChange(event.target.files?.[0] ?? null)}
-                                onBlur={onBlur}
-                                name={name}
-                                ref={ref}
-                              />
+                              <div className="relative">
+                                {storeImagePreview ? (
+                                  <div className="relative rounded-2xl border-2 border-border/60 bg-muted/10 p-2">
+                                    <img
+                                      src={storeImagePreview}
+                                      alt="Store image preview"
+                                      className="h-40 w-full rounded-xl object-cover"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setStoreImagePreview(null);
+                                        onChange(null);
+                                      }}
+                                      className="absolute right-3 top-3 rounded-full bg-destructive p-1.5 text-white transition-colors hover:bg-destructive/90"
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <label
+                                    htmlFor="storeImage"
+                                    className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border/60 bg-muted/10 p-6 transition-colors hover:border-primary/40 hover:bg-muted/20"
+                                  >
+                                    <svg
+                                      className="h-8 w-8 text-muted-foreground"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                      />
+                                    </svg>
+                                    <div className="text-center">
+                                      <p className="text-sm font-medium text-foreground">
+                                        Upload store image
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        PNG, JPG up to 10MB
+                                      </p>
+                                    </div>
+                                  </label>
+                                )}
+                                <Input
+                                  id="storeImage"
+                                  type="file"
+                                  accept="image/*"
+                                  className="sr-only"
+                                  onChange={(event) => {
+                                    const file = event.target.files?.[0] ?? null;
+                                    onChange(file);
+                                    if (file) {
+                                      const reader = new FileReader();
+                                      reader.onloadend = () => {
+                                        setStoreImagePreview(reader.result as string);
+                                      };
+                                      reader.readAsDataURL(file);
+                                    }
+                                  }}
+                                  onBlur={onBlur}
+                                  name={name}
+                                  ref={ref}
+                                />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -378,11 +493,11 @@ const Register = () => {
                         name="location"
                         render={({ field }) => (
                           <FormItem className="md:col-span-2">
-                            <FormLabel className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                            <FormLabel>
                               Store location (optional)
                             </FormLabel>
                             <FormControl>
-                              <Input placeholder="Area, city (optional)" className="h-11 rounded-2xl px-4" {...field} />
+                              <Input placeholder="Area, city (optional)" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -394,14 +509,14 @@ const Register = () => {
 
                 <Button
                   type="submit"
-                  className="w-full rounded-full py-4 text-xs font-semibold uppercase tracking-[0.35em] sm:py-5 sm:text-sm"
+                  className="w-full"
                 >
                   {role === "VENDOR" ? "Create vendor account" : "Create buyer account"}
                 </Button>
               </form>
             </Form>
 
-            <p className="mt-8 text-center text-sm text-muted-foreground">
+            <p className="mt-6 text-center text-xs text-muted-foreground sm:mt-8 sm:text-sm">
               Already have an account?{" "}
               <Link
                 href="/auth/login"

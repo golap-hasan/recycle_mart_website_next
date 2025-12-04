@@ -66,9 +66,15 @@ export default function NavTop() {
             align="end"
             className="border-border bg-background text-foreground"
           >
-            <DropdownMenuItem><Link href="/profile">Profile</Link></DropdownMenuItem>
-            <DropdownMenuItem>Sign In</DropdownMenuItem>
-            <DropdownMenuItem>Register</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/profile">Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/auth/login">Sign In</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/auth/register">Register</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -137,9 +143,15 @@ export default function NavTop() {
               align="end"
               className="border-border bg-background text-foreground"
             >
-              <DropdownMenuItem><Link href="/profile">Profile</Link></DropdownMenuItem>
-              <DropdownMenuItem>Sign In</DropdownMenuItem>
-              <DropdownMenuItem>Register</DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/profile">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/auth/login">Sign In</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/auth/register">Register</Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           {/* <div className="h-4 w-px bg-border"></div> */}

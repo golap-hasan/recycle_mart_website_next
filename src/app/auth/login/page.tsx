@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import PageLayout from "@/tools/PageLayout";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -45,7 +44,7 @@ const LoginForm = () => {
 
       <PageLayout className="relative z-10 flex min-h-screen items-center py-20">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="flex w-full flex-col items-center gap-6 rounded-4xl border border-primary/20 bg-primary/5 p-4 text-center shadow-inner lg:items-start lg:text-left">
+          <div className="hidden sm:flex w-full flex-col items-center gap-6 rounded-4xl border border-primary/20 bg-primary/5 p-4 text-center shadow-inner lg:items-start lg:text-left">
 
             <div className="relative w-full max-w-[540px] rounded-4xl p-6">
               <Lottie
