@@ -218,7 +218,7 @@ export default function AllAdsExplorer({
 
       <section className="grid gap-6 rounded-3xl border border-border/30 bg-background/60 p-8 text-sm text-muted-foreground md:grid-cols-3 mt-6">
         <div className="space-y-3">
-          <h2 className="text-base font-semibold text-foreground">Why sell with All Price BD?</h2>
+          <h2 className="text-base font-semibold text-foreground">Why sell with Recycle Mart?</h2>
           <p>Reach millions of verified buyers across Bangladesh with simple listing tools and trusted support.</p>
         </div>
         <div className="space-y-3">

@@ -78,7 +78,7 @@ const Footer = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <Globe className="h-5 w-5" />
                 </div>
-                <p className="text-lg font-semibold">All Price BD</p>
+                <p className="text-lg font-semibold">Recycle Mart</p>
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Bangladesh&rsquo;s trusted marketplace for buying and selling everything—from electronics and vehicles to property and services.
@@ -121,7 +121,7 @@ const Footer = () => {
 
           <div className="container mx-auto flex flex-col items-center justify-between gap-4 text-xs sm:flex-row">
             <p className="text-center sm:text-left">
-              © {new Date().getFullYear()} All Price BD. All rights reserved.
+              © {new Date().getFullYear()} Recycle Mart. All rights reserved.
             </p>
             <div className="flex items-center gap-3">
               {socials.map(({ label, href, icon: Icon }) => (

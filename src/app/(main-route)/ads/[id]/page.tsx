@@ -28,12 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // In real app, fetch ad data based on id
   if (id !== sampleAd.id) {
     return {
-      title: "Ad Not Found | All Price BD",
+      title: "Ad Not Found | Recycle Mart",
     };
   }
 
   return {
-    title: `${sampleAd.title} | All Price BD`,
+    title: `${sampleAd.title} | Recycle Mart`,
     description: sampleAd.description.slice(0, 160),
     keywords: [
       sampleAd.category,
